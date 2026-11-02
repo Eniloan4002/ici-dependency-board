@@ -1,0 +1,809 @@
+{
+  "nodes": [
+    {
+      "id": "5",
+      "title": "Database foundation",
+      "group": "Core",
+      "deps": [],
+      "proposed": false
+    },
+    {
+      "id": "6",
+      "title": "Authentication & JWT",
+      "group": "Core",
+      "deps": [
+        "5"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "7",
+      "title": "Role-based access control",
+      "group": "Core",
+      "deps": [
+        "6"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "8",
+      "title": "React shell & design system",
+      "group": "Core",
+      "deps": [],
+      "proposed": false
+    },
+    {
+      "id": "9",
+      "title": "User account panel",
+      "group": "Core",
+      "deps": [
+        "7",
+        "8"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "12",
+      "title": "Student master record API",
+      "group": "Enrollment",
+      "deps": [
+        "5"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "13",
+      "title": "Duplicate applicant detection",
+      "group": "Enrollment",
+      "deps": [
+        "12"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "14",
+      "title": "Enrollment queue & intake",
+      "group": "Enrollment",
+      "deps": [
+        "12",
+        "13",
+        "8"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "15",
+      "title": "Requirement checklist service",
+      "group": "Enrollment",
+      "deps": [
+        "12"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "16",
+      "title": "Requirement verification screen",
+      "group": "Enrollment",
+      "deps": [
+        "15",
+        "8"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "17",
+      "title": "Attendance & enrollment confirmation",
+      "group": "Enrollment",
+      "deps": [
+        "15"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "18",
+      "title": "Section configuration API",
+      "group": "Enrollment",
+      "deps": [
+        "5"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "19",
+      "title": "Section allocation workspace",
+      "group": "Enrollment",
+      "deps": [
+        "18",
+        "12",
+        "8"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "SETUP",
+      "title": "Subjects, years & grading periods",
+      "group": "Academic",
+      "deps": [
+        "5"
+      ],
+      "proposed": true
+    },
+    {
+      "id": "41",
+      "title": "Teacher & adviser assignments",
+      "group": "Academic",
+      "deps": [
+        "18",
+        "7",
+        "SETUP"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "GRADE",
+      "title": "Grade draft & submission API",
+      "group": "Academic",
+      "deps": [
+        "41",
+        "SETUP"
+      ],
+      "proposed": true
+    },
+    {
+      "id": "23",
+      "title": "Advisory section roster",
+      "group": "Academic",
+      "deps": [
+        "19",
+        "15",
+        "17",
+        "41"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "24",
+      "title": "Subject grade encoding grid",
+      "group": "Academic",
+      "deps": [
+        "19",
+        "41",
+        "GRADE"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "25",
+      "title": "Grading period finalization & locks",
+      "group": "Academic",
+      "deps": [
+        "24",
+        "SETUP"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "26",
+      "title": "Grade correction requests",
+      "group": "Academic",
+      "deps": [
+        "25"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "27",
+      "title": "Grade correction review & approval",
+      "group": "Academic",
+      "deps": [
+        "26"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "28",
+      "title": "Incomplete grade monitoring",
+      "group": "Academic",
+      "deps": [
+        "24"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "29",
+      "title": "Consolidated academic history",
+      "group": "Academic",
+      "deps": [
+        "24",
+        "15",
+        "19"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "30",
+      "title": "Withdrawal clearance workflow",
+      "group": "Academic",
+      "deps": [
+        "12",
+        "41"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "31",
+      "title": "Dynamic report query engine",
+      "group": "Reporting",
+      "deps": [
+        "12",
+        "18"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "32",
+      "title": "Operational reports & exports",
+      "group": "Reporting",
+      "deps": [
+        "31",
+        "15",
+        "17"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "ATTEND",
+      "title": "Daily attendance recording / import",
+      "group": "Reporting",
+      "deps": [
+        "12",
+        "19"
+      ],
+      "proposed": true
+    },
+    {
+      "id": "RULES",
+      "title": "Honor rules & eligibility",
+      "group": "Reporting",
+      "deps": [],
+      "proposed": true
+    },
+    {
+      "id": "SO",
+      "title": "Special Order capture & validation",
+      "group": "Reporting",
+      "deps": [
+        "12"
+      ],
+      "proposed": true
+    },
+    {
+      "id": "33",
+      "title": "Guidance at-risk monitoring",
+      "group": "Reporting",
+      "deps": [
+        "31",
+        "24",
+        "15",
+        "ATTEND"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "34",
+      "title": "Honor roll computation",
+      "group": "Reporting",
+      "deps": [
+        "24",
+        "RULES"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "35",
+      "title": "Official documents: Form 137 / TOR",
+      "group": "Reporting",
+      "deps": [
+        "29",
+        "28",
+        "30",
+        "SO"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "36",
+      "title": "Cashiering reference export",
+      "group": "Reporting",
+      "deps": [
+        "12",
+        "17"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "37",
+      "title": "Legacy student CSV ingestion",
+      "group": "Migration",
+      "deps": [
+        "5"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "38",
+      "title": "Historical grade matrix parser",
+      "group": "Migration",
+      "deps": [
+        "37"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "39",
+      "title": "Spreadsheet cleaning & import",
+      "group": "Migration",
+      "deps": [
+        "37"
+      ],
+      "proposed": false
+    },
+    {
+      "id": "40",
+      "title": "Cutover reconciliation",
+      "group": "Migration",
+      "deps": [
+        "37",
+        "38",
+        "39"
+      ],
+      "proposed": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "5",
+      "target": "6",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "6",
+      "target": "7",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "7",
+      "target": "9",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "8",
+      "target": "9",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "5",
+      "target": "12",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "13",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "14",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "13",
+      "target": "14",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "8",
+      "target": "14",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "15",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "15",
+      "target": "16",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "8",
+      "target": "16",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "15",
+      "target": "17",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "5",
+      "target": "18",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "18",
+      "target": "19",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "19",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "8",
+      "target": "19",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "5",
+      "target": "SETUP",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "18",
+      "target": "41",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "7",
+      "target": "41",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "SETUP",
+      "target": "41",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "41",
+      "target": "GRADE",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "SETUP",
+      "target": "GRADE",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "19",
+      "target": "23",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "15",
+      "target": "23",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "17",
+      "target": "23",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "41",
+      "target": "23",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "19",
+      "target": "24",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "41",
+      "target": "24",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "GRADE",
+      "target": "24",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "24",
+      "target": "25",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "SETUP",
+      "target": "25",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "25",
+      "target": "26",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "26",
+      "target": "27",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "24",
+      "target": "28",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "24",
+      "target": "29",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "15",
+      "target": "29",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "19",
+      "target": "29",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "30",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "41",
+      "target": "30",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "31",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "18",
+      "target": "31",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "31",
+      "target": "32",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "15",
+      "target": "32",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "17",
+      "target": "32",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "ATTEND",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "19",
+      "target": "ATTEND",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "SO",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "31",
+      "target": "33",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "24",
+      "target": "33",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "15",
+      "target": "33",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "ATTEND",
+      "target": "33",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "24",
+      "target": "34",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "RULES",
+      "target": "34",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "29",
+      "target": "35",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "28",
+      "target": "35",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "30",
+      "target": "35",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "SO",
+      "target": "35",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "12",
+      "target": "36",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "17",
+      "target": "36",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "5",
+      "target": "37",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "37",
+      "target": "38",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "37",
+      "target": "39",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "37",
+      "target": "40",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "38",
+      "target": "40",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "39",
+      "target": "40",
+      "kind": "required",
+      "note": "Prerequisite for integrated completion."
+    },
+    {
+      "source": "27",
+      "target": "28",
+      "kind": "conditional",
+      "note": "Only if locked INC completion requires registrar approval."
+    },
+    {
+      "source": "25",
+      "target": "34",
+      "kind": "conditional",
+      "note": "Required for official finalized honor lists."
+    },
+    {
+      "source": "38",
+      "target": "35",
+      "kind": "conditional",
+      "note": "Required for transcripts containing legacy grades."
+    },
+    {
+      "source": "12",
+      "target": "37",
+      "kind": "model",
+      "note": "Student model must be finalized; the whole CRUD feature need not be complete."
+    },
+    {
+      "source": "24",
+      "target": "38",
+      "kind": "model",
+      "note": "Subject, term and grade model only; grade grid completion is not required."
+    },
+    {
+      "source": "18",
+      "target": "39",
+      "kind": "model",
+      "note": "Section target model only."
+    },
+    {
+      "source": "15",
+      "target": "39",
+      "kind": "model",
+      "note": "Checklist target model only."
+    },
+    {
+      "source": "30",
+      "target": "39",
+      "kind": "model",
+      "note": "Withdrawal target model only."
+    }
+  ]
+}

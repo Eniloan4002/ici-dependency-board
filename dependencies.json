@@ -5,7 +5,14 @@
       "title": "Database foundation",
       "group": "Core",
       "deps": [],
-      "proposed": false
+      "proposed": false,
+      "description": "Establishes the database schema for the three primary functional modules and auditing tables.",
+      "story": "As a system administrator, I want to use database foundation so that establishes the database schema for the three primary functional modules and auditing tables.",
+      "criteria": [
+        "PostgreSQL database initialized with schema migrations managed via Flyway/Liquibase. Enforces strict relational foreign key constraints, column validations, unique indexes, and audit timestamps (created_at, updated_at, created_by, updated_by).",
+        "users, roles, permissions, students, guardians, vouchers, requirements, sections, academic_terms, grades, grade_corrections, withdrawals, audit_logs."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "6",
@@ -14,7 +21,13 @@
       "deps": [
         "5"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Secure login mechanism for school personnel to authenticate into the system.",
+      "story": "As a system administrator, I want to use authentication & jwt so that secure login mechanism for school personnel to authenticate into the system.",
+      "criteria": [
+        "Java Spring Boot using Spring Security and jjwt. Endpoint /api/auth/login accepts credentials, verifies BCrypt hashes, and issues signed stateless JSON Web Tokens (JWT) containing user ID, campus scope, and role claims. Includes a token invalidation endpoint (/api/auth/logout)."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "7",
@@ -23,14 +36,31 @@
       "deps": [
         "6"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Access restriction ensuring users view and operate only functions authorized for their role.",
+      "story": "As a system administrator, I want to use role-based access control so that access restriction ensuring users view and operate only functions authorized for their role.",
+      "criteria": [
+        "Declarative method-level security (@PreAuthorize(\"hasRole('...')\")) on Spring Boot controllers alongside React client-side route guards.",
+        "Full system administrative and account control.",
+        "Master record creation, requirement auditing, section assignment, grade period lock, and document issuance.",
+        "System-wide academic oversight, operational report generation, and withdrawal approvals.",
+        "Read-only access to assigned advisory section, student compliance badges, and withdrawal endorsement.",
+        "Grade submission for assigned subjects during active submission windows and correction request submission."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "8",
       "title": "React shell & design system",
       "group": "Core",
       "deps": [],
-      "proposed": false
+      "proposed": false,
+      "description": "Single-page interface layout reflecting ICI brand design standards.",
+      "story": "As a system administrator, I want to use react shell & design system so that single-page interface layout reflecting ICI brand design standards.",
+      "criteria": [
+        "React interface implementing responsive navigation, collapsible sidebars, breadcrumbs, modal dialogs, and toast notifications. Configured with brand design tokens: Primary Blue (#56A9C8), Deep Slate Blue (#6A8FB4), Soft Coral (#D97A84), Mint Green (#7FC9B3), Charcoal (#2F3136), and Mist White (#F7F9FB)."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "9",
@@ -40,7 +70,15 @@
         "7",
         "8"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Administrators can create, edit, activate and deactivate school personnel accounts.",
+      "story": "As a system administrator, I want to use user account panel so that administrators can create, edit, activate and deactivate school personnel accounts.",
+      "criteria": [
+        "Create accounts with authorized role and campus scope.",
+        "Reject unauthorized account changes.",
+        "Deactivated accounts cannot authenticate."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "12",
@@ -49,7 +87,14 @@
       "deps": [
         "5"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Ingestion and management of incoming applicant demographic, family, and educational details.",
+      "story": "As a registrar, I want to use student master record api so that ingestion and management of incoming applicant demographic, family, and educational details.",
+      "criteria": [
+        "Form submission and Spring Boot REST API persisting personal details, Learner Reference Number (LRN), junior high origin, parental information, household income bracket, track, and specialization (STEM, ABM, HUMSS, TVL-Cookery, etc.).",
+        "Classifies applicants as Qualified Voucher Recipient (QVR), Education Service Contracting (ESC), Alternative Learning System (ALS), or Regular/Paying."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "13",
@@ -58,7 +103,14 @@
       "deps": [
         "12"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Automatic validation preventing duplicate applicant records across campuses.",
+      "story": "As a registrar, I want to use duplicate applicant detection so that automatic validation preventing duplicate applicant records across campuses.",
+      "criteria": [
+        "Spring Boot service running SQL validation checks when an applicant is submitted. Flags matches based on exact LRN matches or fuzzy matches on normalized full name plus date of birth.",
+        "Suspected duplicates trigger a DUPLICATE_FLAG state, placing the file into a dedicated Registrar resolution queue with side-by-side comparison tools to merge or reject records."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "14",
@@ -69,7 +121,14 @@
         "13",
         "8"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Ingestion and management of incoming applicant demographic, family, and educational details.",
+      "story": "As a registrar, I want to use enrollment queue & intake so that ingestion and management of incoming applicant demographic, family, and educational details.",
+      "criteria": [
+        "Form submission and Spring Boot REST API persisting personal details, Learner Reference Number (LRN), junior high origin, parental information, household income bracket, track, and specialization (STEM, ABM, HUMSS, TVL-Cookery, etc.).",
+        "Classifies applicants as Qualified Voucher Recipient (QVR), Education Service Contracting (ESC), Alternative Learning System (ALS), or Regular/Paying."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "15",
@@ -78,7 +137,14 @@
       "deps": [
         "12"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Digital tracking system replacing paper-based and Excel document trackers.",
+      "story": "As a registrar, I want to use requirement checklist service so that digital tracking system replacing paper-based and Excel document trackers.",
+      "criteria": [
+        "Relational document checklist recording submission state per mandatory credential: PSA Birth Certificate, Form 137/Report Card, Certificate of Completion, and Certificate of Good Moral Character.",
+        "Submitted, Missing, Pending, and Invalid. The engine dynamically evaluates the aggregate state (Complete, Incomplete, Pending) and creates an immutable audit row whenever a document status changes."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "16",
@@ -88,7 +154,14 @@
         "15",
         "8"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Digital tracking system replacing paper-based and Excel document trackers.",
+      "story": "As a registrar, I want to use requirement verification screen so that digital tracking system replacing paper-based and Excel document trackers.",
+      "criteria": [
+        "Relational document checklist recording submission state per mandatory credential: PSA Birth Certificate, Form 137/Report Card, Certificate of Completion, and Certificate of Good Moral Character.",
+        "Submitted, Missing, Pending, and Invalid. The engine dynamically evaluates the aggregate state (Complete, Incomplete, Pending) and creates an immutable audit row whenever a document status changes."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "17",
@@ -97,7 +170,13 @@
       "deps": [
         "15"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Business workflow transitioning students from provisional applicants to officially confirmed students.",
+      "story": "As a registrar, I want to use attendance & enrollment confirmation so that business workflow transitioning students from provisional applicants to officially confirmed students.",
+      "criteria": [
+        "Multi-point gatekeeper API. Checks document completion and verifies first-week orientation attendance flag before updating a student record status from Pre-Enlisted to Enrolled. Prevents premature record generation for non-attending walk-ins."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "18",
@@ -106,7 +185,14 @@
       "deps": [
         "5"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Balanced student distribution across sections based on physical constraints and routing rules.",
+      "story": "As a registrar, I want to use section configuration api so that balanced student distribution across sections based on physical constraints and routing rules.",
+      "criteria": [
+        "Database model defining section entities with attributes for campus, academic year, grade level, track, strand, physical classroom room assignment, and maximum capacity limit.",
+        "React interface displaying real-time filled/available seat meters. Filters students by residential district/transportation route and program. Enforces concurrency checks to prevent section over-allocation."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "19",
@@ -117,7 +203,14 @@
         "12",
         "8"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Balanced student distribution across sections based on physical constraints and routing rules.",
+      "story": "As a registrar, I want to use section allocation workspace so that balanced student distribution across sections based on physical constraints and routing rules.",
+      "criteria": [
+        "Database model defining section entities with attributes for campus, academic year, grade level, track, strand, physical classroom room assignment, and maximum capacity limit.",
+        "React interface displaying real-time filled/available seat meters. Filters students by residential district/transportation route and program. Enforces concurrency checks to prevent section over-allocation."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "SETUP",
@@ -126,7 +219,15 @@
       "deps": [
         "5"
       ],
-      "proposed": true
+      "proposed": true,
+      "description": "Configure subjects, academic years, terms and grading periods.",
+      "story": "As a registrar or assigned teacher, I want to use subjects, years & grading periods so that configure subjects, academic years, terms and grading periods.",
+      "criteria": [
+        "Reject duplicate subject codes and invalid dates.",
+        "Assignments and grades reference configured subjects and periods.",
+        "Protect referenced records from destructive deletion."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "41",
@@ -137,7 +238,15 @@
         "7",
         "SETUP"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Assign teachers to subjects/classes and advisers to sections for an academic year.",
+      "story": "As a registrar or assigned teacher, I want to use teacher & adviser assignments so that assign teachers to subjects/classes and advisers to sections for an academic year.",
+      "criteria": [
+        "Teachers can access only their assigned classes.",
+        "Advisory rosters resolve the assigned section.",
+        "Withdrawal endorsements route to the assigned adviser."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "GRADE",
@@ -147,7 +256,15 @@
         "41",
         "SETUP"
       ],
-      "proposed": true
+      "proposed": true,
+      "description": "Persist grade drafts and formal submissions with assignment authorization and audit history.",
+      "story": "As a registrar or assigned teacher, I want to use grade draft & submission api so that persist grade drafts and formal submissions with assignment authorization and audit history.",
+      "criteria": [
+        "Save and retrieve draft marks including INC where allowed.",
+        "Validate grade scales and teacher assignments.",
+        "Reject writes during locked periods after lock-service integration."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "23",
@@ -159,7 +276,13 @@
         "17",
         "41"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Read-only monitoring screen dedicated to Teacher Advisers.",
+      "story": "As a registrar or assigned teacher, I want to use advisory section roster so that read-only monitoring screen dedicated to Teacher Advisers.",
+      "criteria": [
+        "React dashboard connected to Spring Boot endpoint querying by teacher ID and active academic year. Displays section students, contact numbers, enrollment states, credential completion badges, and academic flags without allowing unauthorized record edits."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "24",
@@ -170,7 +293,13 @@
         "41",
         "GRADE"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Spreadsheet-like web interface for subject teachers to encode grading period marks.",
+      "story": "As a registrar or assigned teacher, I want to use subject grade encoding grid so that spreadsheet-like web interface for subject teachers to encode grading period marks.",
+      "criteria": [
+        "Data-entry grid supporting keyboard navigation, cell-level numeric validation (0.00 to 100.00 or DepEd non-numeric scales), autosaving drafts, and formal submission controls. Ensures teachers only access classes explicitly assigned to them."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "25",
@@ -180,7 +309,13 @@
         "24",
         "SETUP"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Automated and manual cutoffs preventing unauthorized grade adjustments past deadlines.",
+      "story": "As a registrar or assigned teacher, I want to use grading period finalization & locks so that automated and manual cutoffs preventing unauthorized grade adjustments past deadlines.",
+      "criteria": [
+        "Administrative control module allowing the Registrar to set submission deadlines or manually trigger immediate grade locks per grading period, grade level, and section. Post-lock write operations via teacher endpoints are rejected with HTTP 403 Forbidden."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "26",
@@ -189,7 +324,17 @@
       "deps": [
         "25"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Digital post-lock grade revision cycle replacing paper letters and informal notifications.",
+      "story": "As a registrar or assigned teacher, I want to use grade correction requests so that digital post-lock grade revision cycle replacing paper letters and informal notifications.",
+      "criteria": [
+        "Technical Implementation Steps:",
+        "Teacher submits an electronic request specifying student ID, subject, original grade, proposed revised grade, and mandatory justification.",
+        "Teacher uploads supporting proof (scanned assessment or computation sheet) handled via Spring Boot multipart storage.",
+        "Registrar reviews request in an adjudication queue, issuing an Approval or Rejection.",
+        "System executes the grade change within a database transaction and logs old value, new value, timestamp, teacher ID, and approving registrar ID into the audit log."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "27",
@@ -198,7 +343,17 @@
       "deps": [
         "26"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Digital post-lock grade revision cycle replacing paper letters and informal notifications.",
+      "story": "As a registrar or assigned teacher, I want to use grade correction review & approval so that digital post-lock grade revision cycle replacing paper letters and informal notifications.",
+      "criteria": [
+        "Technical Implementation Steps:",
+        "Teacher submits an electronic request specifying student ID, subject, original grade, proposed revised grade, and mandatory justification.",
+        "Teacher uploads supporting proof (scanned assessment or computation sheet) handled via Spring Boot multipart storage.",
+        "Registrar reviews request in an adjudication queue, issuing an Approval or Rejection.",
+        "System executes the grade change within a database transaction and logs old value, new value, timestamp, teacher ID, and approving registrar ID into the audit log."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "28",
@@ -207,7 +362,13 @@
       "deps": [
         "24"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Monitoring tool to surface, resolve, and close outstanding incomplete marks (INC).",
+      "story": "As a registrar or assigned teacher, I want to use incomplete grade monitoring so that monitoring tool to surface, resolve, and close outstanding incomplete marks (INC).",
+      "criteria": [
+        "Database view aggregating all unresolved INC grades across historical and active terms. Allows registrar staff to track pending completion tasks, record follow-up logs with subject teachers, and update finalized marks upon completion."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "29",
@@ -218,7 +379,13 @@
         "15",
         "19"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Comprehensive single-screen timeline displaying a student's complete academic path.",
+      "story": "As a registrar or assigned teacher, I want to use consolidated academic history so that comprehensive single-screen timeline displaying a student's complete academic path.",
+      "criteria": [
+        "Aggregated React view retrieving all completed terms, subjects, quarterly marks, final ratings, section assignments, adviser history, and document checklist statuses for a given student ID. Includes a single-click PDF export function."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "30",
@@ -228,7 +395,16 @@
         "12",
         "41"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "End-to-end clearance pipeline managing student departures and credential withholding.",
+      "story": "As a registrar or assigned teacher, I want to use withdrawal clearance workflow so that end-to-end clearance pipeline managing student departures and credential withholding.",
+      "criteria": [
+        "Mandatory Verification Steps:",
+        "Teacher adviser endorsement.",
+        "Cashiering office financial clearance confirmation.",
+        "Locks official credential release until all clearances are checked, automatically updating student standing to Withdrawn."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "31",
@@ -238,7 +414,13 @@
         "12",
         "18"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Modular data filtering engine powering operational summaries.",
+      "story": "As a authorized school staff member, I want to use dynamic report query engine so that modular data filtering engine powering operational summaries.",
+      "criteria": [
+        "Spring Boot service utilizing JPA Criteria API and native queries to aggregate data dynamically across five dimensions: Campus, Academic Year, Grading Period, Grade Level, and Section."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "32",
@@ -249,7 +431,13 @@
         "15",
         "17"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Exportable institutional reports for administration and DepEd monitoring.",
+      "story": "As a authorized school staff member, I want to use operational reports & exports so that exportable institutional reports for administration and DepEd monitoring.",
+      "criteria": [
+        "Generates real-time PDF and CSV reports for active enrollment counts, voucher classification distributions (QVR, ESC, ALS, Regular), and missing credential checklists."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "ATTEND",
@@ -259,14 +447,30 @@
         "12",
         "19"
       ],
-      "proposed": true
+      "proposed": true,
+      "description": "Record or import daily attendance to support absence-based guidance alerts.",
+      "story": "As a authorized school staff member, I want to use daily attendance recording / import so that record or import daily attendance to support absence-based guidance alerts.",
+      "criteria": [
+        "Distinguish excused and unexcused absences.",
+        "Prevent duplicate student/date records.",
+        "Evaluate consecutive absences using the school-day calendar."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "RULES",
       "title": "Honor rules & eligibility",
       "group": "Reporting",
       "deps": [],
-      "proposed": true
+      "proposed": true,
+      "description": "Document and configure institution-approved honor eligibility and calculation rules.",
+      "story": "As a authorized school staff member, I want to use honor rules & eligibility so that document and configure institution-approved honor eligibility and calculation rules.",
+      "criteria": [
+        "Approve weights, thresholds and rounding with the school.",
+        "Define treatment of INC, failures, missing grades and ties.",
+        "Verify computation against approved example cases."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "SO",
@@ -275,7 +479,15 @@
       "deps": [
         "12"
       ],
-      "proposed": true
+      "proposed": true,
+      "description": "Capture required DepEd Special Order information and validate document eligibility.",
+      "story": "As a authorized school staff member, I want to use special order capture & validation so that capture required DepEd Special Order information and validate document eligibility.",
+      "criteria": [
+        "Confirm which programs and documents require SO information.",
+        "Prevent generation when required SO information is missing.",
+        "Audit authorized SO corrections."
+      ],
+      "source": "Additional planning task \u2014 team review required."
     },
     {
       "id": "33",
@@ -287,7 +499,17 @@
         "15",
         "ATTEND"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Early-warning dashboard helping the Guidance Office identify students requiring academic or attendance intervention.",
+      "story": "As a authorized school staff member, I want to use guidance at-risk monitoring so that early-warning dashboard helping the Guidance Office identify students requiring academic or attendance intervention.",
+      "criteria": [
+        "Filter engine flagging students based on configurable rules:",
+        "Consecutive unexcused absences.",
+        "Failing subject marks or unresolved INC ratings.",
+        "Overdue mandatory credentials.",
+        "Includes exportable case sheets and counseling status notes."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "34",
@@ -297,7 +519,13 @@
         "24",
         "RULES"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Automated academic achievement calculation.",
+      "story": "As a authorized school staff member, I want to use honor roll computation so that automated academic achievement calculation.",
+      "criteria": [
+        "Spring Boot computation service calculating General Weighted Averages (GWA) across grading terms and sorting candidates based on institutional and DepEd honor criteria."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "35",
@@ -309,7 +537,13 @@
         "30",
         "SO"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Automated document generator producing DepEd Form 137 and Transcripts of Records.",
+      "story": "As a authorized school staff member, I want to use official documents: form 137 / tor so that automated document generator producing DepEd Form 137 and Transcripts of Records.",
+      "criteria": [
+        "Template engine compiling certified transcripts with pre-generation rule checks. Blocks document generation if the student has unresolved INC grades, pending admission credentials, or missing DepEd Special Order (SO) numbers."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "36",
@@ -319,7 +553,13 @@
         "12",
         "17"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Automated data export bridge eliminating manual CSV handoffs to the independent billing application.",
+      "story": "As a authorized school staff member, I want to use cashiering reference export so that automated data export bridge eliminating manual CSV handoffs to the independent billing application.",
+      "criteria": [
+        "Dedicated Spring Boot export endpoint generating structured CSV rosters containing student IDs, full names, enrolled strands, campus assignments, and voucher subsidy categories."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "37",
@@ -328,7 +568,13 @@
       "deps": [
         "5"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Cleanses and imports master student profiles from legacy exports into the new PostgreSQL database.",
+      "story": "As a migration administrator, I want to use legacy student csv ingestion so that cleanses and imports master student profiles from legacy exports into the new PostgreSQL database.",
+      "criteria": [
+        "Spring Batch / OpenCSV service reading legacy CSV exports, normalizing character encodings, validating LRN formats, mapping legacy fields into the new entity model, and logging import exceptions."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "38",
@@ -337,7 +583,13 @@
       "deps": [
         "37"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Ingests past grades and subject catalogs.",
+      "story": "As a migration administrator, I want to use historical grade matrix parser so that ingests past grades and subject catalogs.",
+      "criteria": [
+        "Custom ingestion scripts parsing historical academic matrices, standardizing subject names, linking marks to migrated student master IDs, and storing past terms in a read-only historical schema."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "39",
@@ -346,7 +598,13 @@
       "deps": [
         "37"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Imports sectioning and document tracking spreadsheets into the system.",
+      "story": "As a migration administrator, I want to use spreadsheet cleaning & import so that imports sectioning and document tracking spreadsheets into the system.",
+      "criteria": [
+        "Apache POI parsing service extracting section assignments, room schedules, physical folder status flags, and historical withdrawal logs from Excel files into PostgreSQL."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     },
     {
       "id": "40",
@@ -357,7 +615,13 @@
         "38",
         "39"
       ],
-      "proposed": false
+      "proposed": false,
+      "description": "Verification panel ensuring zero data loss before turning off legacy systems.",
+      "story": "As a migration administrator, I want to use cutover reconciliation so that verification panel ensuring zero data loss before turning off legacy systems.",
+      "criteria": [
+        "Internal audit dashboard comparing record counts, grade distributions, and checklist totals between legacy extracts and migrated PostgreSQL tables. Requires formal administrative sign-off before legacy ICI Local is shut down."
+      ],
+      "source": "Derived draft \u2014 review against the implementation plan."
     }
   ],
   "edges": [

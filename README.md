@@ -1,19 +1,25 @@
-# ICI dependency board
+# ICI team tracker
 
-Interactive dependency atlas for ICI Local 2.0.
+Live page: https://eniloan4002.github.io/ici-dependency-board/
 
-Open https://eniloan4002.github.io/ici-dependency-board/
+## Shared editing
 
-See [collaboration instructions](documentation/ici-board/README.md) and [dependency register](DEPENDENCIES.md).
+Anyone with the link can edit assignments, status, task details and sprints without logging in. Changes automatically PATCH the Firebase Realtime Database at `/tracker` using field-level paths, so editing an assignee does not replace someone else’s status change. The most recently accepted update wins for the same field. Views refresh every 15 seconds while visible. Offline edits queue in localStorage and retry on reconnect or Sync now. Browser storage must be available for offline edits to survive closing the page.
 
-To save completion changes, use Enable shared editing with a fine-grained GitHub token scoped to this repository with Contents read/write. Tokens remain in tab memory. Shared progress is read every 30 seconds and saved in Git history. This does not update Jira.
+## One-time Firebase setup
 
-## Sprint planning and task details
+Project: ici-tracker. Database: https://ici-tracker-default-rtdb.asia-southeast1.firebasedatabase.app
 
-Choose Sprint board to create named, dated sprints. Open a card to assign its sprint, change its status, or edit its description, user story and acceptance criteria. Drag cards between To Do, In Progress, Review and Done. Search/module and sprint filters narrow the board. Status/sprint selectors also work without dragging. Done stays aligned with the dependency map; unfinished prerequisites are warnings, not hard movement restrictions.
+In Realtime Database → Rules, replace the rules with `firebase.rules.json` and Publish. This intentionally allows anyone to read/change the tracker subtree, without sign-in, while leaving other paths locked. Do not store student records, private data or credentials here. Database URLs are public configuration, not secrets. There is no backend server or Firebase SDK dependency. Only the Spark plan is needed; do not link billing or upgrade to Blaze. Free quotas still apply and availability is subject to Firebase service limits. Sites is not used for the live tracker.
 
-All 37 tasks include draft stories and acceptance criteria derived from the supplied implementation plan or the additional planning tasks. These are reviewable drafts, not school-approved rules. Metadata, sprint definitions and assignments use the same local queue and optional GitHub sharing as completion. Enable shared editing to publish local changes to the team; without it they remain in this browser. This does not synchronize with Jira. Sprint date/name creation and assignment are supported; automatic sprint start/closure is not implemented.
+Existing browser-local pending edits sync when the updated page opens. The earlier GitHub state file is retained as a legacy snapshot; it is no longer the live store. Its checked snapshot was empty at migration. Refresh/reopen older tabs to stop using the previous GitHub adapter.
 
-## Assignees
+## Archive and retire
 
-Open any task in either view and use Assigned to: Linus, Anton, Pauline, Elijah, or Unassigned. The assignee appears on map and sprint cards. Assignment changes use the existing local persistence and optional GitHub shared-editing queue, preserving status, sprint and task details. Anyone using the page can change their local assignment; publishing it for everyone still requires shared editing access.
+1. Ask teammates to open the live page and Sync now to upload their local pending changes.
+2. Download archive. It includes the latest fetched shared state plus pending edits on the exporting device. Resolve sync errors before treating it as the final team record.
+3. Keep the downloaded HTML and a Firebase Data → Export JSON backup in the project documentation. The HTML is self-contained, read-only and works offline, including map, board, task details and sprint filters.
+4. Set Firebase rules back to `{ "rules": { ".read": false, ".write": false } }`, then delete the Firebase project when backups are confirmed.
+5. Disable GitHub Pages in repository Settings → Pages. Keep the source and final snapshot in GitHub and archive the repository when no further edits are needed.
+
+No active service is needed to view the downloaded HTML. Keep it in more than one location before retiring the services.
